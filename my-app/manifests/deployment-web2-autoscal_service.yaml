@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind      : Deployment
+metadata:
+    name  : my-web2-deployment-autoscaling
+    labels:
+        app  : web2-k8s-application
+        env  : prod
+        owner: STALKER
+spec:
+    selector:
+        matchLabels:
+            project: web2
+    template:
+        metadata: 
+            labels:
+                project: web2   # Service will look for those PODS labels!
+        spec:
+            containers:
+                - name : web2-container
+                  image: soldat1285/web2:v1
+                  ports:
+                      - containerPort: 80
+                  resources:   # ограничение на ресурсы.
+                      requests:
+                          cpu   : 50m
+                          memory: 200Mi
+                      limits:
+                          cpu   : 100m
+                          memory: 256Mi
+                      
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+    name: my-web2-autoscaling
+spec:
+    scaleTargetRef:
+        apiVersion: apps/v2beta1v1
+        kind      : Deployment
+        name      : my-web2-deployment-autoscaling   # Указываем какой деплойминг будем масштабировать.
+    minReplicas: 2
+    maxReplicas: 5
+    metrics:
+        - type    : Resource
+          resource:
+              name: cpu
+              targetAverageUtilization: 70
+        - type    : Resource
+          resource:
+              name: memory
+              targetAverageUtilization: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: my-web2-service
+    labels:
+        env: dev
+spec:
+    selector: 
+        project: web2   # Selecting PODS whis those labels
+    ports:
+        - name: app-listner
+          protocol: TCP
+          port: 80   # Port on Load Balancer
+          targetPort: 80   # Port on POD Need for type service LoadBalancer
+    type: NodePort
+
+    

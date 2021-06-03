@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: web-hosts
+    #annotations:
+      #nginx.ingress.kubernetes.io/rewrite-target: /$1
+    
+spec:
+  rules:
+    - host: web1.test
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: my-web1-service   # имя сервиса kubctl get svc
+                port:
+                  number: 80
+    - host: web2.test
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: my-web2-service   # имя сервиса kubctl get svc
+                port:
+                  number: 80
