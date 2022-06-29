@@ -29,27 +29,24 @@ spec:
                           memory: 256Mi
                       
 ---
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
     name: my-web1-autoscaling
 spec:
     scaleTargetRef:
-        apiVersion: apps/v2beta1v1
+        apiVersion: apps/v1
         kind      : Deployment
         name      : my-web1-deployment-autoscaling   # Указываем какой деплойминг будем масштабировать.
-    minReplicas: 2
+    minReplicas: 1
     maxReplicas: 5
     metrics:
         - type    : Resource
           resource:
               name: cpu
-              targetAverageUtilization: 70
-        - type    : Resource
-          resource:
-              name: memory
-              targetAverageUtilization: 80
-
+              target:
+                  type: Utilization
+                  averageUtilization: 50
 ---
 apiVersion: v1
 kind: Service
