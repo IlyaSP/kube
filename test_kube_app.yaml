@@ -29,7 +29,7 @@ spec:
                           memory: 256Mi
                       
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
     name: my-web1-autoscaling-test
