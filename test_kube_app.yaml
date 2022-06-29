@@ -57,6 +57,7 @@ metadata:
     name: my-web1-service
     labels:
         env: dev
+        app: kuber-web
 spec:
     selector: 
         project: web1   # Selecting PODS whis those labels
