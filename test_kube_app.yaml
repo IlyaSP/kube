@@ -48,22 +48,5 @@ spec:
             target:
               type: Utilization
               averageUtilization: 60
----
-apiVersion: v1
-kind: Service
-metadata:
-    name: my-web1-service
-    labels:
-        env: dev
-        app: kuber-web
-spec:
-    selector: 
-        project: web1   # Selecting PODS whis those labels
-    ports:
-        - name: app-listner
-          protocol: TCP
-          port: 80   # Port on Load Balancer
-          #targetPort: 80   # Port on POD Need for type service LoadBalancer
-    type: ClusterIP
 
     
