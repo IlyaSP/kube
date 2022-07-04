@@ -2,11 +2,12 @@ apiVersion: apps/v1
 kind      : Deployment
 metadata:
     name  : my-web1-deployment-autoscaling
+    annotations:
+       argocd.argoproj.io/sync-options: Replace=true
     labels:
         app  : web1-k8s-application
         env  : prod
         owner: STALKER
-        argocd.argoproj.io/sync-options: Replace=true
 spec:
 #    replicas: 1
     selector:
