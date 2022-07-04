@@ -8,6 +8,7 @@ metadata:
         app  : web1-k8s-application
         env  : prod
         owner: STALKER
+        name: test
 spec:
 #    replicas: 1
     selector:
