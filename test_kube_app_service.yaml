@@ -6,6 +6,7 @@ metadata:
     labels:
         env: dev
         app: kuber-web
+        name: test
 spec:
     selector: 
         project: web1   # Selecting PODS whis those labels
