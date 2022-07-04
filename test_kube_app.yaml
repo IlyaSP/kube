@@ -3,7 +3,7 @@ kind      : Deployment
 metadata:
     name  : my-web1-deployment-autoscaling
     annotations:
-       argocd.argoproj.io/sync-options: PruneLast=true
+       argocd.argoproj.io/sync-options: Replace=true
     labels:
         app  : web1-k8s-application
         env  : prod
